@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		11018B8022EAE71100947A8D /* WeatherDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11018B7F22EAE71100947A8D /* WeatherDataModel.swift */; };
 		11FC11E222E9B8610071A4F4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FC11E122E9B8610071A4F4 /* AppDelegate.swift */; };
 		11FC11E422E9B8610071A4F4 /* WeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FC11E322E9B8610071A4F4 /* WeatherViewController.swift */; };
 		11FC11E722E9B8610071A4F4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11FC11E522E9B8610071A4F4 /* Main.storyboard */; };
@@ -17,6 +18,7 @@
 
 /* Begin PBXFileReference section */
 		0232E8BF2F64D84B67B47477 /* Pods_OpenWeatherApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OpenWeatherApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		11018B7F22EAE71100947A8D /* WeatherDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDataModel.swift; sourceTree = "<group>"; };
 		11FC11DE22E9B8610071A4F4 /* OpenWeatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenWeatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		11FC11E122E9B8610071A4F4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		11FC11E322E9B8610071A4F4 /* WeatherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewController.swift; sourceTree = "<group>"; };
@@ -71,6 +73,7 @@
 			children = (
 				11FC11E122E9B8610071A4F4 /* AppDelegate.swift */,
 				11FC11E322E9B8610071A4F4 /* WeatherViewController.swift */,
+				11018B7F22EAE71100947A8D /* WeatherDataModel.swift */,
 				11FC11E522E9B8610071A4F4 /* Main.storyboard */,
 				11FC11E822E9B8620071A4F4 /* Assets.xcassets */,
 				11FC11EA22E9B8620071A4F4 /* LaunchScreen.storyboard */,
@@ -205,6 +208,7 @@
 			files = (
 				11FC11E422E9B8610071A4F4 /* WeatherViewController.swift in Sources */,
 				11FC11E222E9B8610071A4F4 /* AppDelegate.swift in Sources */,
+				11018B8022EAE71100947A8D /* WeatherDataModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

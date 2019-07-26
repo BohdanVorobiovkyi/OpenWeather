@@ -21,7 +21,7 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     
     //TODO: Declare instance variables here
     let locationManager = CLLocationManager()
-    
+    let weatherDataModel = WeatherDataModel()
     
     //Pre-linked IBOutlets
 
@@ -77,8 +77,29 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     //MARK: - Networking
     /***************************************************************/
     
-    //Write the getWeatherData method here:
-    
+    func getWeatherData(url: String, parametrs: [String: String]) {
+        Alamofire.request(url, method: .get, parameters: parametrs).downloadProgress(closure: {
+            
+            (prog) in
+            self.shapeLayer.strokeEnd = CGFloat(prog.fractionCompleted)
+            print("---->", prog.fractionCompleted)
+            
+        }) .responseJSON {
+            response in
+            if response.result.isSuccess {
+                print("Success", url)
+                
+                let weatherJSON : JSON = JSON(response.result.value!)
+                
+                                self.updateWeatherData(json: weatherJSON)
+//                print(weatherJSON)
+            }
+            else {
+                print("Error\(String(describing: response.result.error))")
+                //Print to label about error
+            }
+        }
+    }
     
     
     
@@ -90,7 +111,30 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     
     
     //Write the updateWeatherData method here:
-    
+    func updateWeatherData(json: JSON) {
+        if let temp = json["main"]["temp"].double {
+            let city = json["name"].stringValue
+            let condition = json["weather"][0]["id"].intValue
+            let humidity = json["main"]["humidity"].intValue
+            let windSpeed = json["wind"]["speed"].doubleValue
+            let weatherIconName = weatherDataModel.updateWeatherIcon(condition: condition)
+            
+            weatherDataModel.temperature = Int(temp - 273.15)
+            weatherDataModel.city = city
+            weatherDataModel.condition = condition
+            weatherDataModel.humidity = humidity
+            weatherDataModel.windSpeed = Int(windSpeed)
+            weatherDataModel.weatherIconName = weatherIconName
+            print(city, temp, humidity, windSpeed, weatherIconName)
+            
+//            updateUIWithWeatherData()
+        }
+        else {
+            //label.text - IS UNAVAIBLE
+            
+        }
+    }
+
     
     
     
@@ -146,56 +190,7 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     //Write the PrepareForSegue Method here
     
     
-   
- 
-//    @objc private func handleTap() {
-//        print("Attempting to animate stroke")
-//
-//        let basicAnimation = CABasicAnimation(keyPath: "strokeEnd")
-//
-//        basicAnimation.toValue = 1
-//
-//        basicAnimation.duration = 2
-//
-//        basicAnimation.fillMode = CAMediaTimingFillMode.forwards
-//        basicAnimation.isRemovedOnCompletion = true
-//
-//        shapeLayer.add(basicAnimation, forKey: "urSoBasic")
-//    }
-   
     
-    func getWeatherData(url: String, parametrs: [String: String]) {
-        Alamofire.request(url, method: .get, parameters: parametrs).downloadProgress(closure: {
-            
-            (prog) in
-            self.shapeLayer.strokeEnd = CGFloat(prog.fractionCompleted)
-            print("---->", prog.fractionCompleted)
-        
-        }) .responseJSON {
-            response in
-            if response.result.isSuccess {
-                print("Success", url)
-                
-                let weatherJSON : JSON = JSON(response.result.value!)
-                
-//                self.updateWeatherData(json: weatherJSON)
-//                                print(weatherJSON)
-            }
-            else {
-                print("Error\(String(describing: response.result.error))")
-                //Print to label about error
-            }
-        }
-    }
-    
-    func loadImage() {
-        Alamofire.request("http://ontheworldmap.com/world/world-political-map-with-countries.jpg").downloadProgress { (prog) in
-            self.shapeLayer.strokeEnd = CGFloat(prog.fractionCompleted)
-            print("---->", prog.fractionCompleted)
-            }.responseData { (data) in
-                print(data.result.value as Any)
-        }
-    }
     
     func beginDownloadingData() {
         shapeLayer.strokeEnd = 0
