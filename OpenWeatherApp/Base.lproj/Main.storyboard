@@ -43,6 +43,35 @@
                                     <constraint firstAttribute="height" constant="60" id="Qm3-hf-5Gk"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NXd-aU-zmC">
+                                <rect key="frame" x="245" y="40" width="110" height="180"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="CqM-Zp-UTJ">
+                                        <rect key="frame" x="0.0" y="0.0" width="110" height="110"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="110" id="BI8-T0-AmP"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="aa" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sns-c8-t9G">
+                                        <rect key="frame" x="4" y="114" width="102" height="62"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="36"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="Sns-c8-t9G" secondAttribute="trailing" constant="4" id="6ud-7O-8dk"/>
+                                    <constraint firstItem="Sns-c8-t9G" firstAttribute="top" secondItem="CqM-Zp-UTJ" secondAttribute="bottom" constant="4" id="7NW-iM-J61"/>
+                                    <constraint firstAttribute="bottom" secondItem="Sns-c8-t9G" secondAttribute="bottom" constant="4" id="KzY-FU-CeW"/>
+                                    <constraint firstItem="CqM-Zp-UTJ" firstAttribute="leading" secondItem="NXd-aU-zmC" secondAttribute="leading" id="LL6-bd-NE6"/>
+                                    <constraint firstItem="CqM-Zp-UTJ" firstAttribute="top" secondItem="NXd-aU-zmC" secondAttribute="top" id="NuA-7N-JDY"/>
+                                    <constraint firstItem="Sns-c8-t9G" firstAttribute="leading" secondItem="NXd-aU-zmC" secondAttribute="leading" constant="4" id="eFR-M9-jeZ"/>
+                                    <constraint firstAttribute="height" constant="180" id="h9m-8e-wPk"/>
+                                    <constraint firstAttribute="width" constant="110" id="kDc-YQ-LzN"/>
+                                    <constraint firstAttribute="trailing" secondItem="CqM-Zp-UTJ" secondAttribute="trailing" id="pCD-b6-13g"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -52,9 +81,11 @@
                             <constraint firstItem="wbC-vR-Mod" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="WIH-s9-7Zr"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="k1F-4Y-3Eh" secondAttribute="bottom" constant="20" id="b6y-Pu-zqX"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="9Vx-za-C7X" secondAttribute="bottom" id="eSB-aX-4XO"/>
+                            <constraint firstItem="NXd-aU-zmC" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" constant="-20" id="gFa-SS-Z9Q"/>
                             <constraint firstItem="k1F-4Y-3Eh" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="60" id="uSt-LY-fbI"/>
                             <constraint firstItem="9Vx-za-C7X" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="wMH-hB-HS1"/>
                             <constraint firstItem="wbC-vR-Mod" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="yHD-xQ-htS"/>
+                            <constraint firstItem="NXd-aU-zmC" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="zeV-ty-2Pm"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -62,6 +93,9 @@
                         <outlet property="containerView" destination="k1F-4Y-3Eh" id="tOd-7x-r1g"/>
                         <outlet property="locationLabel" destination="ZkQ-kM-ovp" id="Pnl-je-Lvl"/>
                         <outlet property="mapView" destination="9Vx-za-C7X" id="jq5-DB-2bo"/>
+                        <outlet property="tempView" destination="NXd-aU-zmC" id="Ysb-56-j4a"/>
+                        <outlet property="temperatureLabel" destination="Sns-c8-t9G" id="r7n-Xl-zzN"/>
+                        <outlet property="weatherIconView" destination="CqM-Zp-UTJ" id="VlP-hU-lQq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
