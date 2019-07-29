@@ -10,6 +10,55 @@ import UIKit
 import CoreLocation
 import Alamofire
 import SwiftyJSON
+import MapKit
+
+extension WeatherViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
+        let region = MKCoordinateRegion(center: mapView.userLocation.coordinate, latitudinalMeters: 3000, longitudinalMeters: 3000)
+        mapView.setRegion(region, animated: true)
+        previousLocation = getCenterLocation(for: mapView)
+    }
+    
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        let center = getCenterLocation(for: mapView)
+        
+        let geocoder = CLGeocoder()
+        
+        guard  let previousLocation = self.previousLocation else {return}
+        
+        guard center.distance(from: previousLocation) > 50 else {return}
+        
+        self.previousLocation = center
+        geocoder.reverseGeocodeLocation(center) { [weak self] (placemarks, err) in
+            guard let self = self else {return}
+            if let _ = err {
+                
+            }
+            
+            guard let placemark = placemarks?.first else {
+                
+                return
+            }
+            let cityName = placemark.locality ?? ""
+            let countryName = placemark.country ?? ""
+            let administrativeArea = placemark.administrativeArea ?? ""
+            let area = placemark.name ?? ""
+            
+            DispatchQueue.main.async {
+                if !countryName.isEmpty && !cityName.isEmpty {
+                    self.locationLabel.text = "\(countryName) \(administrativeArea) "
+                } else {
+                    if administrativeArea != area {
+                        self.locationLabel.text = "\(administrativeArea) \(area)"
+                    } else {
+                        self.locationLabel.text = " \(area)"
+                    }
+                }
+            }
+            print(countryName, cityName)
+        }
+    }
+}
 
 class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     
@@ -22,51 +71,89 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     //TODO: Declare instance variables here
     let locationManager = CLLocationManager()
     let weatherDataModel = WeatherDataModel()
-    
+    var previousLocation: CLLocation?
+    let cornerRadius: CGFloat = 25.0
     //Pre-linked IBOutlets
-
+    @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var locationLabel: UILabel!
+    @IBOutlet weak var containerView: UIView!
+    
     let shapeLayer = CAShapeLayer()
+    
+    let initialLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Start"
+        label.textAlignment = .center
+        label.font = UIFont.boldSystemFont(ofSize: 15)
+        return label
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let center = CGPoint(x: UIScreen.main.bounds.width/2, y: UIScreen.main.bounds.height  - containerView.frame.height - CGFloat(100) )
+        print(UIScreen.main.bounds.height - containerView.frame.height - CGFloat(70) , UIScreen.main.bounds.height)
         
+       
         
         //TODO:Set up the location manager here.
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         locationManager.requestAlwaysAuthorization()
         locationManager.startUpdatingLocation()
+        mapView.showsUserLocation = true
+        mapView.delegate = self
+       
+        containerView.layer.cornerRadius = cornerRadius
+        containerView.layer.shadowColor = UIColor.darkGray.cgColor
+        containerView.layer.shadowOffset = CGSize(width: 5.0, height: 5.0)
+        containerView.layer.shadowRadius = 25.0
+        containerView.layer.shadowOpacity = 0.9
+       
+        locationLabel.clipsToBounds = true
+        locationLabel.layer.cornerRadius = 15
         
+//        view.layer.shadowOffset = CGSize(width: 10, height: 10)
         
         // let's start by drawing a circle somehow
-        
-        let center = view.center
+//        let buttonLocation = CGPoint(x: mapView.frame.width/2, y: UIScreen.main.bounds.height - containerView.frame.height - CGFloat(130))
         
         // create my track layer
         let trackLayer = CAShapeLayer()
         
-        let circularPath = UIBezierPath(arcCenter: center, radius: 100, startAngle: -CGFloat.pi / 2, endAngle: 2 * CGFloat.pi, clockwise: true)
+        let circularPath = UIBezierPath(arcCenter: center, radius: 40, startAngle: -CGFloat.pi / 2, endAngle: 2 * CGFloat.pi, clockwise: true)
         trackLayer.path = circularPath.cgPath
         
         trackLayer.strokeColor = UIColor.lightGray.cgColor
-        trackLayer.lineWidth = 10
+        trackLayer.lineWidth = 6
         trackLayer.fillColor = UIColor.clear.cgColor
         trackLayer.lineCap = CAShapeLayerLineCap.round
+//        view.layer.addSublayer(trackLayer)
         view.layer.addSublayer(trackLayer)
         
         //        let circularPath = UIBezierPath(arcCenter: center, radius: 100, startAngle: -CGFloat.pi / 2, endAngle: 2 * CGFloat.pi, clockwise: true)
         shapeLayer.path = circularPath.cgPath
         
         shapeLayer.strokeColor = UIColor.red.cgColor
-        shapeLayer.lineWidth = 10
-        shapeLayer.fillColor = UIColor.clear.cgColor
+        shapeLayer.lineWidth = 6
+        shapeLayer.fillColor = UIColor.white.cgColor
         shapeLayer.lineCap = CAShapeLayerLineCap.round
         
         shapeLayer.strokeEnd = 0
         
         view.layer.addSublayer(shapeLayer)
         
-//        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap)))
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 70, height: 20))
+        label.center = center
+        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.textAlignment = .center
+        label.text = "Forecast"
+        view.addSubview(label)
+        
+        
+//        view.addSubview(initialLabel)
+//        initialLabel.center = center
+//        initialLabel.frame = CGRect(x: UIScreen.main.bounds.width/2, y: UIScreen.main.bounds.height  - containerView.frame.height - CGFloat(100), width: 70 , height: 70)
+////        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap)))
         
         
         
@@ -92,6 +179,7 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
                 let weatherJSON : JSON = JSON(response.result.value!)
                 
                                 self.updateWeatherData(json: weatherJSON)
+                
 //                print(weatherJSON)
             }
             else {
@@ -153,9 +241,22 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     //MARK: - Location Manager Delegate Methods
     /***************************************************************/
     
+    func getCenterLocation(for mapView: MKMapView) -> CLLocation {
+        let latitude = mapView.centerCoordinate.latitude
+        let longitude = mapView.centerCoordinate.longitude
+        params = ["lat": String(latitude), "lon": String(longitude), "appid": APP_ID]
+        return CLLocation(latitude: latitude, longitude: longitude)
+    }
+    
+    func getWeatherForLocation(for location: CLLocation) {
+        let latitude = String(location.coordinate.latitude)
+        let longitude = String(location.coordinate.longitude)
+        params = ["lat": latitude, "lon": longitude, "appid": APP_ID]
+    }
     
     //Write the didUpdateLocations method here:
     var params : [String: String] = [String: String]()
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         //Last location from the array
         let location = locations[locations.count - 1]
@@ -170,6 +271,8 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
            
         }
     }
+    
+    
     
     //Write the didFailWithError method here:
     
