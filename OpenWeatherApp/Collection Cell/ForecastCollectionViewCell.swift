@@ -113,15 +113,15 @@ class ForecastCollectionViewCell: UICollectionViewCell {
         dateFormatter.timeZone = NSTimeZone(name: "UTC") as TimeZone?
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let date = dateFormatter.date(from: date)
-        dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: 1800) as TimeZone?
-        dateFormatter.dateFormat = "HH:mm:ss"
+        dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: 10800) as TimeZone?
+        dateFormatter.dateFormat = "HH:mm"
         print("String From Date : \(dateFormatter.string(from: date!))")
         return  dateFormatter.string(from: date!)
         
     }
     
     func roundedDouble(temp: Double) -> Double {
-         let rounded = Double(round(100 * (temp - 273.15)) / 100)
+         let rounded = Double(round(10 * (temp - 273.15)) / 10)
         return rounded
     }
     
@@ -131,15 +131,15 @@ class ForecastCollectionViewCell: UICollectionViewCell {
         let tempMax = cellModel.main.tempMax
         let tempMin = cellModel.main.tempMin
         if tempMax < 0 || tempMin < 0 {
-            tempMaxLabel.text = "\(roundedDouble(temp:tempMax ))"
-            tempMinLabel.text = "\(roundedDouble(temp: tempMin))"
+            tempMaxLabel.text = "\(roundedDouble(temp:tempMax) ) C°"
+            tempMinLabel.text = "\(roundedDouble(temp: tempMin)) C°"
         }
-        tempMaxLabel.text = "+\(roundedDouble(temp:tempMax ))"
-        tempMinLabel.text = "+\(roundedDouble(temp: tempMin))"
+        tempMaxLabel.text = "+\(roundedDouble(temp:tempMax )) C°"
+        tempMinLabel.text = "+\(roundedDouble(temp: tempMin)) C°"
         timeLabel.text = convertTimeFormater(cellModel.dateText)
         dateLabel.text = convertDateFormater(cellModel.dateText)
-        humidityLabel.text = String(cellModel.main.humidity)
-        windLabel.text = " \(cellModel.wind.speed)m/s"
+        humidityLabel.text = "humidity: \(cellModel.main.humidity)%"
+        windLabel.text = "speed: \(cellModel.wind.speed)m/s"
         setImage(with: cellModel.weather[0].icon)
         
         //        guard let previewImageURL = URL.init(string: cellModel.homeScreenMostViewedPreviewImageURLString) else {
