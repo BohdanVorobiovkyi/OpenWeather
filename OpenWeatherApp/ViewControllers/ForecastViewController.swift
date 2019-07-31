@@ -63,7 +63,6 @@ class ForecastViewController: UIViewController, UICollectionViewDelegate, UIColl
             self.itemsHeight = (UIScreen.main.bounds.height - self.view.safeAreaInsets.top - self.view.safeAreaInsets.bottom - 100)/3 - CGFloat(4)
             self.itemsWidth = UIScreen.main.bounds.width / 3 - 8 - self.view.safeAreaInsets.right - self.view.safeAreaInsets.left
         }
-        print(itemsHeight, itemsWidth)
     }
     
     @IBAction func backButton(_ sender: Any) {
@@ -95,7 +94,6 @@ class ForecastViewController: UIViewController, UICollectionViewDelegate, UIColl
             if self.forecastData.weatherItems.count == 0 {
                 self.chosenCity = "Locality is not found. \n Try another one."
             }
-            print("--", self.forecastData.weatherItems)
         } catch let err as NSError {
             print(err.localizedDescription)
         }
@@ -104,7 +102,6 @@ class ForecastViewController: UIViewController, UICollectionViewDelegate, UIColl
     // MARK: UICollectionViewDataSource
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
     
@@ -117,7 +114,6 @@ class ForecastViewController: UIViewController, UICollectionViewDelegate, UIColl
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
         return forecastData.weatherItems.count
     }
     
