@@ -258,9 +258,8 @@ class WeatherViewController: UIViewController, InternetConnection {
 }
 
 extension WeatherViewController: MKMapViewDelegate {
+    
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
-        let region = MKCoordinateRegion(center: mapView.userLocation.coordinate, latitudinalMeters: 5000, longitudinalMeters: 5000)
-        mapView.setRegion(region, animated: true)
         previousLocation = getCenterLocation(for: mapView)
     }
     
@@ -312,23 +311,27 @@ extension WeatherViewController: MKMapViewDelegate {
             }
         }
     }
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        //Last location from the array
+        let location = locations[locations.count - 1]
+        if location.horizontalAccuracy > 0 {
+            locationManager.stopUpdatingLocation()
+            locationManager.delegate = nil
+            print(location.coordinate.latitude, location.coordinate.longitude)
+            let latitude = String(location.coordinate.latitude)
+            let longitude = String(location.coordinate.longitude)
+            let region = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 2000, longitudinalMeters: 2000)
+            mapView.setRegion(region, animated: true)
+            params = ["lat": latitude, "lon": longitude, "appid": NetworkEndpoints.APP_ID]
+        }
+    }
 }
+
 extension WeatherViewController: CLLocationManagerDelegate {
         func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
             print(error)
         }
-        func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-            //Last location from the array
-            let location = locations[locations.count - 1]
-            if location.horizontalAccuracy > 0 {
-                locationManager.stopUpdatingLocation()
-                locationManager.delegate = nil
-                print(location.coordinate.latitude, location.coordinate.longitude)
-                let latitude = String(location.coordinate.latitude)
-                let longitude = String(location.coordinate.longitude)
-                params = ["lat": latitude, "lon": longitude, "appid": NetworkEndpoints.APP_ID]
-            }
-        }
+    
 //        func getWeatherForLocation(for location: CLLocation) {
 //            let latitude = String(location.coordinate.latitude)
 //            let longitude = String(location.coordinate.longitude)
