@@ -92,10 +92,10 @@ class WeatherViewController: UIViewController, InternetConnection {
         
         mapView.showsUserLocation = true
         mapView.delegate = self
-//        locationManager.delegate = self
-//        locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
-//        locationManager.requestAlwaysAuthorization()
-//        locationManager.startUpdatingLocation()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+        locationManager.requestAlwaysAuthorization()
+        locationManager.startUpdatingLocation()
     }
     //MARK: - Shape layer with grey track layer and label in the center of the shape.
     func createButtonsWithProgressBar(center: CGPoint) {
@@ -313,28 +313,28 @@ extension WeatherViewController: MKMapViewDelegate {
         }
     }
 }
-//extension WeatherViewController: CLLocationManagerDelegate {
-//        func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-//            print(error)
-//        }
-//        func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//            //Last location from the array
-//            let location = locations[locations.count - 1]
-//            if location.horizontalAccuracy > 0 {
-//                locationManager.stopUpdatingLocation()
-//                locationManager.delegate = nil
-//                print(location.coordinate.latitude, location.coordinate.longitude)
-//                let latitude = String(location.coordinate.latitude)
-//                let longitude = String(location.coordinate.longitude)
-//                params = ["lat": latitude, "lon": longitude, "appid": NetworkEndpoints.APP_ID]
-//            }
-//        }
+extension WeatherViewController: CLLocationManagerDelegate {
+        func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+            print(error)
+        }
+        func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+            //Last location from the array
+            let location = locations[locations.count - 1]
+            if location.horizontalAccuracy > 0 {
+                locationManager.stopUpdatingLocation()
+                locationManager.delegate = nil
+                print(location.coordinate.latitude, location.coordinate.longitude)
+                let latitude = String(location.coordinate.latitude)
+                let longitude = String(location.coordinate.longitude)
+                params = ["lat": latitude, "lon": longitude, "appid": NetworkEndpoints.APP_ID]
+            }
+        }
 //        func getWeatherForLocation(for location: CLLocation) {
 //            let latitude = String(location.coordinate.latitude)
 //            let longitude = String(location.coordinate.longitude)
 //            params = ["lat": latitude, "lon": longitude, "appid": NetworkEndpoints.APP_ID]
 //        }
 //    
-//}
+}
 
 
