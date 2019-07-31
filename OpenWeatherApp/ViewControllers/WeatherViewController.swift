@@ -259,7 +259,7 @@ class WeatherViewController: UIViewController, InternetConnection {
 
 extension WeatherViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
-        let region = MKCoordinateRegion(center: mapView.userLocation.coordinate, latitudinalMeters: 3000, longitudinalMeters: 3000)
+        let region = MKCoordinateRegion(center: mapView.userLocation.coordinate, latitudinalMeters: 5000, longitudinalMeters: 5000)
         mapView.setRegion(region, animated: true)
         previousLocation = getCenterLocation(for: mapView)
     }
@@ -277,7 +277,7 @@ extension WeatherViewController: MKMapViewDelegate {
         geocoder.reverseGeocodeLocation(center) { [weak self] (placemarks, err) in
             guard let self = self else {return}
             if let _ = err {
-                
+                print(String(err?.localizedDescription ?? "Err"))
             }
             
             guard let placemark = placemarks?.first else {
