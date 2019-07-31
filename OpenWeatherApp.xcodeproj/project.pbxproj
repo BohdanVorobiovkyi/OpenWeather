@@ -78,12 +78,19 @@
 			path = "AdditionalModelForSwifty(not used)";
 			sourceTree = "<group>";
 		};
+		1197DF3F22F1BA2F005EE536 /* NetworkEndpoints */ = {
+			isa = PBXGroup;
+			children = (
+				1197DF3D22F1AA06005EE536 /* NetworkEndpoints.swift */,
+			);
+			path = NetworkEndpoints;
+			sourceTree = "<group>";
+		};
 		11AE489E22F04A2500D32732 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
 				11FC11E322E9B8610071A4F4 /* WeatherViewController.swift */,
 				11EF846A22EFCC3200BFADA2 /* ForecastViewController.swift */,
-				1197DF3D22F1AA06005EE536 /* NetworkEndpoints.swift */,
 				11EF846022EFB01800BFADA2 /* SearchViewController.swift */,
 			);
 			path = ViewControllers;
@@ -152,6 +159,7 @@
 				11AE489F22F04A3700D32732 /* Models */,
 				11AE48A822F06C2900D32732 /* Views */,
 				11AE48A322F06B6900D32732 /* Collection Cell */,
+				1197DF3F22F1BA2F005EE536 /* NetworkEndpoints */,
 				11AE48A022F04A5E00D32732 /* Extensions */,
 				11FC11E822E9B8620071A4F4 /* Assets.xcassets */,
 				11FC11EA22E9B8620071A4F4 /* LaunchScreen.storyboard */,

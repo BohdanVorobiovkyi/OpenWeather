@@ -11,10 +11,6 @@ import Alamofire
 //import SwiftyJSON
 
 private let reuseIdentifier = "forecastCell"
-let FORECAST_URL = "http://api.openweathermap.org/data/2.5/forecast"
-let APP_ID = "b09b3fe9e81090dcceabb607f67ce310"
-
-
 
 class ForecastViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
@@ -42,7 +38,7 @@ class ForecastViewController: UIViewController, UICollectionViewDelegate, UIColl
         super.viewDidLoad()
         
         setupCollectionView()
-        getForecastData(url: FORECAST_URL , parametrs: params)
+        getForecastData(url: NetworkEndpoints.FORECAST_URL , parametrs: params)
         
     }
     

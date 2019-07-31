@@ -10,6 +10,7 @@ import UIKit
 
 
 class SearchViewController: UIViewController {
+    
     @IBOutlet weak var getWeatherButton: UIButton!
 
     fileprivate var params: [String: String] = [String: String]()
@@ -24,6 +25,10 @@ class SearchViewController: UIViewController {
         super.viewDidDisappear(animated)
         changeCityTextField.text = ""
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        changeCityTextField.becomeFirstResponder()
+    }
    
     @IBAction func backButton(_ sender: Any) {
         self.view.endEditing(true)
@@ -36,7 +41,7 @@ class SearchViewController: UIViewController {
         if cityName.isEmpty{
             showDefaultAlert(title: "Try Again", message: "Textfield is empty! Enter city name for search.")
         } else {
-            params = ["q": String(cityName), "appid": APP_ID]
+            params = ["q": String(cityName), "appid": NetworkEndpoints.APP_ID]
             sendDataToNextVC(entered: cityName)
         }
     }
