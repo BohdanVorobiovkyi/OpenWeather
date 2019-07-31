@@ -12,23 +12,24 @@ import Alamofire
 import SwiftyJSON
 import MapKit
 
-class WeatherViewController: UIViewController, CLLocationManagerDelegate {
+class WeatherViewController: UIViewController, InternetConnection {
     
-    //Constants
-    let WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather"
-    let FORECAST_URL = "http://api.openweathermap.org/data/2.5/forecast"
-    let APP_ID = "b09b3fe9e81090dcceabb607f67ce310"
+    fileprivate let locationManager = CLLocationManager()
+    fileprivate let weatherDataModel = WeatherDataModel()
+    fileprivate let shapeLayer = CAShapeLayer()
+    fileprivate let trackLayer = CAShapeLayer()
+    fileprivate let shapeLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 70, height: 20))
+    fileprivate let forecastLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 50, height: 20))
+    fileprivate let forecastView = UIView()
     
-    let locationManager = CLLocationManager()
-    let weatherDataModel = WeatherDataModel()
-    let shapeLayer = CAShapeLayer()
-    let trackLayer = CAShapeLayer()
-    
-    
-    var previousLocation: CLLocation?
-    let cornerRadius: CGFloat = 25.0
-    
+    fileprivate var params : [String: String] = [String: String]()
 
+    var previousLocation: CLLocation?
+    fileprivate let cornerRadius: CGFloat = 25.0
+    fileprivate let shapeRadius: CGFloat = 40
+    
+    var chosenCity: String = ""
+    
     //Pre-linked IBOutlets
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var locationLabel: UILabel!
@@ -36,18 +37,11 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var tempView: UIView!
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var weatherIconView: UIImageView!
-//    @IBOutlet weak var weekForecastView: UIView!
-    
-    let shapeRadius: CGFloat = 40
-    let shapeLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 70, height: 20))
-    let forecastLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 50, height: 20))
-    let forecastView = UIView()
-    
-    var chosenCity: String = ""
-    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
+       
         //TODO:Set up the location manager here.
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
@@ -75,9 +69,11 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
         forecastView.backgroundColor = UIColor.white
         forecastView.layer.cornerRadius = 30
         view.addSubview(forecastView)
-        
-        
-        
+    
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+//        containerView.fadeOut()
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -124,31 +120,35 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
         view.addSubview(forecastLabel)
         
         
-        
     }
     
     @IBAction func searchButton(_ sender: Any) {
-        
+        checkInternetConnection()
+        if Reachability.isConnectedToNetwork() == true {
+            goToSearchVC()
+            print("SerachVC")
+        }
+    }
+    fileprivate func goToSearchVC() {
+        guard let searchVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "searchVC") as? SearchViewController else { return }
+        searchVC.modalPresentationStyle = UIModalPresentationStyle.fullScreen
+        self.present(searchVC, animated: true, completion: nil)
     }
     
     //MARK: - Networking
     /***************************************************************/
     
-    func getWeatherData(url: String, parametrs: [String: String]) {
+    fileprivate func getWeatherData(url: String, parametrs: [String: String]) {
         Alamofire.request(url, method: .get, parameters: parametrs).downloadProgress(closure: {
-            
             (prog) in
             self.shapeLayer.strokeEnd = CGFloat(prog.fractionCompleted)
-            print("---->", prog.fractionCompleted)
             self.fadeOutStrokeCompletion()
-            
         }) .responseJSON {
             response in
             if response.result.isSuccess {
                 print("Success", url)
                 let weatherJSON : JSON = JSON(response.result.value!)
                 self.updateWeatherData(json: weatherJSON)
-               
             }
             else {
                 print("Error\(String(describing: response.result.error))")
@@ -161,7 +161,7 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     
     //MARK: - JSON Parsing
     
-    func updateWeatherData(json: JSON) {
+    fileprivate func updateWeatherData(json: JSON) {
         if let temp = json["main"]["temp"].double {
             let city = json["name"].stringValue
             let condition = json["weather"][0]["id"].intValue
@@ -180,64 +180,36 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
         }
     }
     
-   
-        
-    
-    
     //MARK: - Location Manager Delegate Methods
     /***************************************************************/
     
-    func getCenterLocation(for mapView: MKMapView) -> CLLocation {
+    fileprivate func getCenterLocation(for mapView: MKMapView) -> CLLocation {
         let latitude = mapView.centerCoordinate.latitude
         let longitude = mapView.centerCoordinate.longitude
-        params = ["lat": String(latitude), "lon": String(longitude), "appid": APP_ID]
+        params = ["lat": String(latitude), "lon": String(longitude), "appid": NetworkEndpoints.APP_ID]
         return CLLocation(latitude: latitude, longitude: longitude)
-    }
-    
-    func getWeatherForLocation(for location: CLLocation) {
-        let latitude = String(location.coordinate.latitude)
-        let longitude = String(location.coordinate.longitude)
-        params = ["lat": latitude, "lon": longitude, "appid": APP_ID]
-    }
-    
-    //Write the didUpdateLocations method here:
-    var params : [String: String] = [String: String]()
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        //Last location from the array
-        let location = locations[locations.count - 1]
-        if location.horizontalAccuracy > 0 {
-            locationManager.stopUpdatingLocation()
-            locationManager.delegate = nil
-            print(location.coordinate.latitude, location.coordinate.longitude)
-            let latitude = String(location.coordinate.latitude)
-            let longitude = String(location.coordinate.longitude)
-            params = ["lat": latitude, "lon": longitude, "appid": APP_ID]
-            //            let params : [String : String] = ["lat": latitude, "lon": longitude, "appid": APP_ID]
-            
-        }
     }
     
     //MARK: - UI Updates
     /***************************************************************/
     func updateUIWithWeatherData() {
-//        chosenCity = weatherDataModel.city
         temperatureLabel.text = "\(weatherDataModel.temperature) C°"
         weatherIconView.image = UIImage(named: weatherDataModel.weatherIconName)
-        
     }
     
     func addGuesture() {
         let tap = UITapGestureRecognizer(target: self, action: #selector(showWeekForecast))
         forecastView.addGestureRecognizer(tap)
     }
+    
     @objc func showWeekForecast() {
-//        getForecastData(url: FORECAST_URL, parametrs: params)
-        sendDataToNextVC()
-        print("--->5 days")
-        
+        checkInternetConnection()
+        if Reachability.isConnectedToNetwork() == true {
+             sendDataToForecastVC()
+            print("--->5 days")
+        }
     }
-    func sendDataToNextVC() {
+    func sendDataToForecastVC() {
         guard let forecastVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "forecastVC") as? ForecastViewController else { return }
         forecastVC.params = params
         forecastVC.chosenCity = chosenCity
@@ -245,23 +217,9 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
         forecastVC.modalPresentationStyle = UIModalPresentationStyle.fullScreen
         
         self.present(forecastVC, animated: true, completion: nil)
-        //        forecastVC.videoURLString = homeVideoData.homeProgrammeInfo[0].path
-//        let navController = UINavigationController(rootViewController: forecastVC)
-//        navController.navigationBar.isHidden = true
-//        navController.navigationBar.isTranslucent = false
-        
-//        self.present(forecastVC, animated: true, completion: nil)
-        
-        //        navigationController?.pushViewController(navController, animated: true)
     }
     
-    
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print(error)
-    }
-    
-    
-    func fadeOutStrokeCompletion() {
+    fileprivate func fadeOutStrokeCompletion() {
         let basicAnimation = CABasicAnimation(keyPath: "strokeColor")
         basicAnimation.fromValue = UIColor.red.cgColor
         basicAnimation.toValue = UIColor.clear.cgColor
@@ -271,24 +229,12 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
         self.shapeLayer.add(basicAnimation, forKey: "urSoBasic")
     }
     
-    
-    //MARK: - Change City Delegate methods
-    /***************************************************************/
-    
-    
-    //Write the userEnteredANewCityName Delegate method here:
-    
-    
-    
-    //Write the PrepareForSegue Method here
-    
-    
-    
-    
     func beginDownloadingData() {
         shapeLayer.strokeEnd = 0
-        getWeatherData(url: WEATHER_URL, parametrs: params)
-        
+        checkInternetConnection()
+        if Reachability.isConnectedToNetwork() == true {
+        getWeatherData(url: NetworkEndpoints.WEATHER_URL, parametrs: params)
+        }
     }
     
     // Check for touches
@@ -328,30 +274,60 @@ extension WeatherViewController: MKMapViewDelegate {
             }
             
             guard let placemark = placemarks?.first else {
-                
+                if Reachability.isConnectedToNetwork() == false {
+                    self.containerView.fadeIn()
+                    DispatchQueue.main.async {
+                        self.locationLabel.text = "No Internet Connection"
+                    }
+                } else {
+                    self.containerView.fadeOut()
+                }
                 return
             }
             let cityName = placemark.locality ?? ""
             let countryName = placemark.country ?? ""
             let administrativeArea = placemark.administrativeArea ?? ""
             let area = placemark.name ?? ""
-            self.chosenCity = cityName
+           
             
             DispatchQueue.main.async {
                 self.containerView.fadeIn()
                 if !countryName.isEmpty && !cityName.isEmpty {
-                    self.locationLabel.text = "\(countryName) \(administrativeArea) "
+                    self.locationLabel.text = "\(countryName), \(cityName) "
                 } else {
-                    if administrativeArea != area {
-                        self.locationLabel.text = "\(administrativeArea) \(area)"
+                    if administrativeArea != area && !administrativeArea.isEmpty {
+                        self.locationLabel.text = "\(administrativeArea), \(area)"
                     } else {
                         self.locationLabel.text = " \(area)"
                     }
                 }
+                 self.chosenCity = self.locationLabel.text ?? ""
             }
-            print(countryName, cityName)
         }
     }
+}
+extension WeatherViewController: CLLocationManagerDelegate {
+    //    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+    //        print(error)
+    //    }
+    //    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    //        //Last location from the array
+    //        let location = locations[locations.count - 1]
+    //        if location.horizontalAccuracy > 0 {
+    //            locationManager.stopUpdatingLocation()
+    //            locationManager.delegate = nil
+    //            print(location.coordinate.latitude, location.coordinate.longitude)
+    //            let latitude = String(location.coordinate.latitude)
+    //            let longitude = String(location.coordinate.longitude)
+    //            params = ["lat": latitude, "lon": longitude, "appid": NetworkEndpoints.APP_ID]
+    //        }
+    //    }
+    //    func getWeatherForLocation(for location: CLLocation) {
+    //        let latitude = String(location.coordinate.latitude)
+    //        let longitude = String(location.coordinate.longitude)
+    //        params = ["lat": latitude, "lon": longitude, "appid": NetworkEndpoints.APP_ID]
+    //    }
+
 }
 
 

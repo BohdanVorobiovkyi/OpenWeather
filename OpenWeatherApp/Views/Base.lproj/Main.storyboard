@@ -21,7 +21,7 @@
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                             </mapView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="redPin" translatesAutoresizingMaskIntoConstraints="NO" id="wbC-vR-Mod">
-                                <rect key="frame" x="179.5" y="300.5" width="16" height="46"/>
+                                <rect key="frame" x="179.5" y="297.5" width="16" height="46"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k1F-4Y-3Eh" userLabel="ContainerView">
                                 <rect key="frame" x="60" y="587" width="255" height="60"/>
@@ -81,7 +81,6 @@
                                 <state key="normal" image="search"/>
                                 <connections>
                                     <action selector="searchButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Xbw-yb-Tde"/>
-                                    <segue destination="AN9-SV-lnj" kind="showDetail" id="cMP-l0-K9K"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -98,7 +97,7 @@
                             <constraint firstItem="NXd-aU-zmC" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" constant="-20" id="gFa-SS-Z9Q"/>
                             <constraint firstItem="k1F-4Y-3Eh" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="60" id="uSt-LY-fbI"/>
                             <constraint firstItem="9Vx-za-C7X" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="wMH-hB-HS1"/>
-                            <constraint firstItem="wbC-vR-Mod" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-10" id="yHD-xQ-htS"/>
+                            <constraint firstItem="wbC-vR-Mod" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-13" id="yHD-xQ-htS"/>
                             <constraint firstItem="NXd-aU-zmC" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="zeV-ty-2Pm"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -148,8 +147,8 @@
                                     <outlet property="delegate" destination="L7M-ct-1sa" id="AWq-dK-a1q"/>
                                 </connections>
                             </collectionView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nxz-L9-vgi">
-                                <rect key="frame" x="0.0" y="40" width="375" height="60"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nxz-L9-vgi">
+                                <rect key="frame" x="60" y="30" width="255" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="iqQ-y6-2sZ"/>
                                 </constraints>
@@ -169,34 +168,42 @@
                                     <action selector="backButton:" destination="L7M-ct-1sa" eventType="touchUpInside" id="532-BO-AtT"/>
                                 </connections>
                             </button>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Mag-TH-el6">
+                                <rect key="frame" x="0.0" y="98" width="375" height="2"/>
+                                <color key="tintColor" red="1" green="0.028078071964938167" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            </progressView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="8QI-rs-dGf" firstAttribute="trailing" secondItem="hBc-Tg-cHH" secondAttribute="trailing" id="36j-WM-M8l"/>
-                            <constraint firstItem="Nxz-L9-vgi" firstAttribute="leading" secondItem="8QI-rs-dGf" secondAttribute="leading" id="8G2-2F-x3A"/>
+                            <constraint firstItem="Mag-TH-el6" firstAttribute="leading" secondItem="8QI-rs-dGf" secondAttribute="leading" id="3oL-TU-0XL"/>
+                            <constraint firstItem="Nxz-L9-vgi" firstAttribute="leading" secondItem="w5d-hu-YRI" secondAttribute="trailing" id="8G2-2F-x3A"/>
                             <constraint firstItem="hBc-Tg-cHH" firstAttribute="leading" secondItem="8QI-rs-dGf" secondAttribute="leading" id="DF8-iP-cpY"/>
-                            <constraint firstItem="hBc-Tg-cHH" firstAttribute="top" secondItem="Nxz-L9-vgi" secondAttribute="bottom" constant="20" id="DQM-4D-9Qi"/>
-                            <constraint firstItem="Nxz-L9-vgi" firstAttribute="top" secondItem="8QI-rs-dGf" secondAttribute="top" constant="20" id="EwK-yc-lFG"/>
+                            <constraint firstItem="hBc-Tg-cHH" firstAttribute="top" secondItem="Nxz-L9-vgi" secondAttribute="bottom" constant="30" id="DQM-4D-9Qi"/>
+                            <constraint firstItem="Nxz-L9-vgi" firstAttribute="top" secondItem="8QI-rs-dGf" secondAttribute="top" constant="10" id="EwK-yc-lFG"/>
                             <constraint firstItem="w5d-hu-YRI" firstAttribute="leading" secondItem="8QI-rs-dGf" secondAttribute="leading" constant="20" id="Kk7-lI-xm6"/>
-                            <constraint firstItem="8QI-rs-dGf" firstAttribute="trailing" secondItem="Nxz-L9-vgi" secondAttribute="trailing" id="UOK-2Q-V7c"/>
+                            <constraint firstItem="8QI-rs-dGf" firstAttribute="trailing" secondItem="Nxz-L9-vgi" secondAttribute="trailing" constant="60" id="UOK-2Q-V7c"/>
                             <constraint firstItem="w5d-hu-YRI" firstAttribute="top" secondItem="8QI-rs-dGf" secondAttribute="top" constant="20" id="UbF-Vr-UG4"/>
                             <constraint firstItem="8QI-rs-dGf" firstAttribute="bottom" secondItem="hBc-Tg-cHH" secondAttribute="bottom" id="gPz-qg-bCT"/>
+                            <constraint firstItem="8QI-rs-dGf" firstAttribute="trailing" secondItem="Mag-TH-el6" secondAttribute="trailing" id="kDZ-HH-FAb"/>
+                            <constraint firstItem="Mag-TH-el6" firstAttribute="bottom" secondItem="Nxz-L9-vgi" secondAttribute="bottom" constant="10" id="mBe-lc-7my"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="8QI-rs-dGf"/>
                     </view>
                     <connections>
                         <outlet property="chosenPlaceLabel" destination="Nxz-L9-vgi" id="pJK-9k-HTV"/>
                         <outlet property="forecastCollection" destination="hBc-Tg-cHH" id="I3J-DB-amg"/>
+                        <outlet property="progressView" destination="Mag-TH-el6" id="7KR-n4-JFD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VY6-b3-KbB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1636" y="23.838080959520241"/>
+            <point key="canvasLocation" x="1488.8" y="26.53673163418291"/>
         </scene>
         <!--Search View Controller-->
         <scene sceneID="KTV-GG-otT">
             <objects>
-                <viewController id="AN9-SV-lnj" customClass="SearchViewController" customModule="OpenWeatherApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="searchVC" id="AN9-SV-lnj" customClass="SearchViewController" customModule="OpenWeatherApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="6Zf-F5-AvI">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -231,11 +238,11 @@
                                     <action selector="backButton:" destination="AN9-SV-lnj" eventType="touchUpInside" id="ex5-p5-oke"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3ax-Xc-Kis">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3ax-Xc-Kis">
                                 <rect key="frame" x="96.5" y="161.5" width="182" height="31.5"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="continue"/>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -261,7 +268,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="w3h-pf-A6v" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="670" y="-757"/>
+            <point key="canvasLocation" x="670" y="-717"/>
         </scene>
     </scenes>
     <resources>

@@ -8,15 +8,12 @@
 
 import UIKit
 
-protocol ChangeCityDelegate {
-    func userEnteredANewCity(city: String)
-}
 
 class SearchViewController: UIViewController {
     @IBOutlet weak var getWeatherButton: UIButton!
+
+    fileprivate var params: [String: String] = [String: String]()
     
-    var delegate : ChangeCityDelegate?
-    var params: [String: String] = [String: String]()
     override func viewDidLoad() {
         super.viewDidLoad()
         getWeatherButton.layer.cornerRadius = 5
@@ -29,15 +26,19 @@ class SearchViewController: UIViewController {
     }
    
     @IBAction func backButton(_ sender: Any) {
+        self.view.endEditing(true)
         self.dismiss(animated: true, completion: nil)
     }
     @IBOutlet weak var changeCityTextField: UITextField!
     
     @IBAction func getWeatherPressed(_ sender: Any) {
         guard let cityName = changeCityTextField.text else {return}
-        params = ["q": String(cityName), "appid": APP_ID]
-        sendDataToNextVC(entered: cityName)
-        
+        if cityName.isEmpty{
+            showDefaultAlert(title: "Try Again", message: "Textfield is empty! Enter city name for search.")
+        } else {
+            params = ["q": String(cityName), "appid": APP_ID]
+            sendDataToNextVC(entered: cityName)
+        }
     }
     
     func sendDataToNextVC(entered name: String) {
@@ -49,6 +50,9 @@ class SearchViewController: UIViewController {
         
         self.present(forecastVC, animated: true, completion: nil)
     
+    }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
     
 }

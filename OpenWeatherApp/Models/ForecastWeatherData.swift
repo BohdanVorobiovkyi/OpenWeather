@@ -9,7 +9,7 @@
 import Foundation
 
 
-struct WeatherData: Decodable {
+struct ForecastWeatherData: Decodable {
     
     let weatherItems: [WeatherItem]
     

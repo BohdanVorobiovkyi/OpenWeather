@@ -8,9 +8,9 @@
 
 import UIKit
 
+//:MARK - Model for Using SwiftyJSON parsing with ForecastViewController
 class WeatherDataModel {
-    //Model variables
-    
+
     var temperature : Int = 0
     var condition : Int = 0
     var city : String = " "

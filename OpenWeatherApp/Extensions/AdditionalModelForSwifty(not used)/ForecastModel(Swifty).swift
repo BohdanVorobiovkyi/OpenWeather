@@ -7,6 +7,7 @@
 //
 
 import Foundation
+//:MARK - Model for Using SwiftyJSON parsing with ForecastViewController
 
 class ForecastModel {
     let temp : Double
@@ -30,7 +31,7 @@ class ForecastModel {
     func updateWeatherIcon(condition: Int) -> String {
         
         switch (condition) {
-            
+
         case 0...300 :
             return "tstorm1"
             
