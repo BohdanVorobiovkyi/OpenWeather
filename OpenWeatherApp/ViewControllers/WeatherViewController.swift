@@ -242,7 +242,7 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
         forecastVC.params = params
         forecastVC.chosenCity = chosenCity
         print(params)
-        forecastVC.modalPresentationStyle = UIModalPresentationStyle.popover
+        forecastVC.modalPresentationStyle = UIModalPresentationStyle.fullScreen
         
         self.present(forecastVC, animated: true, completion: nil)
         //        forecastVC.videoURLString = homeVideoData.homeProgrammeInfo[0].path

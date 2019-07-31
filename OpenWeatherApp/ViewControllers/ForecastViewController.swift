@@ -33,12 +33,15 @@ class ForecastViewController: UIViewController, UICollectionViewDelegate, UIColl
             print(forecastData.weatherItems.count)
             DispatchQueue.main.async {
                 self.forecastCollection.reloadData()
+                self.forecastCollection.fadeInForCollection()
                 self.chosenPlaceLabel.text = self.chosenCity
             }
         }
     }
     var params : [String: String] = [String: String]()
     var chosenCity: String = ""
+    var itemsHeight: CGFloat = 0
+    var itemsWidth: CGFloat = 0
     @IBOutlet weak var chosenPlaceLabel: UILabel!
     @IBOutlet weak var forecastCollection: UICollectionView!
     
@@ -47,11 +50,29 @@ class ForecastViewController: UIViewController, UICollectionViewDelegate, UIColl
         
         forecastCollection.dataSource = self
         forecastCollection.delegate = self
+        forecastCollection.alpha = 0
         forecastCollection.register(UINib.init(nibName: ForecastCollectionViewCell.identifier, bundle: .none), forCellWithReuseIdentifier: reusable)
         getForecastData(url: FORECAST_URL , parametrs: params)
         
     }
+
     //
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if UIApplication.shared.statusBarOrientation.isLandscape {
+            // activate landscape changes
+            self.itemsHeight = (UIScreen.main.bounds.height - self.view.safeAreaInsets.top - self.view.safeAreaInsets.bottom - 100) - CGFloat(4)
+            if self.itemsHeight < 140 {
+                self.itemsHeight = 200
+            }
+            self.itemsWidth = UIScreen.main.bounds.width / 3 - 24 - self.view.safeAreaInsets.right - self.view.safeAreaInsets.left
+        } else {
+            // activate portrait changes
+            self.itemsHeight = (UIScreen.main.bounds.height - self.view.safeAreaInsets.top - self.view.safeAreaInsets.bottom - 100)/3 - CGFloat(4)
+            self.itemsWidth = UIScreen.main.bounds.width / 3 - 8 - self.view.safeAreaInsets.right - self.view.safeAreaInsets.left
+        }
+        print(itemsHeight, itemsWidth)
+    }
     
     @IBAction func backButton(_ sender: Any) {
         self.dismiss(animated: true, completion: nil )
@@ -122,7 +143,10 @@ class ForecastViewController: UIViewController, UICollectionViewDelegate, UIColl
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: UIScreen.main.bounds.width / 3 - 8, height: UIScreen.main.bounds.height / 4.5)
+//        let height = (UIScreen.main.bounds.height - view.safeAreaInsets.top - view.safeAreaInsets.bottom - 100)/3 - CGFloat(28)
+//        let width = UIScreen.main.bounds.width / 3 - 8 - view.safeAreaInsets.right - view.safeAreaInsets.left
+
+        return CGSize(width: itemsWidth , height:  itemsHeight)
     }
     
     

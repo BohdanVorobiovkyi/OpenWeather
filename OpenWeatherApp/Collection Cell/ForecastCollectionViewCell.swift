@@ -131,11 +131,11 @@ class ForecastCollectionViewCell: UICollectionViewCell {
         let tempMax = cellModel.main.tempMax
         let tempMin = cellModel.main.tempMin
         if tempMax < 0 || tempMin < 0 {
-            tempMaxLabel.text = "\(roundedDouble(temp:tempMax) ) C°"
-            tempMinLabel.text = "\(roundedDouble(temp: tempMin)) C°"
+            tempMaxLabel.text = "\(roundedDouble(temp:tempMax))C°"
+            tempMinLabel.text = "\(roundedDouble(temp: tempMin))C°"
         }
-        tempMaxLabel.text = "+\(roundedDouble(temp:tempMax )) C°"
-        tempMinLabel.text = "+\(roundedDouble(temp: tempMin)) C°"
+        tempMaxLabel.text = "+\(roundedDouble(temp:tempMax ))C°"
+        tempMinLabel.text = "+\(roundedDouble(temp: tempMin))C°"
         timeLabel.text = convertTimeFormater(cellModel.dateText)
         dateLabel.text = convertDateFormater(cellModel.dateText)
         humidityLabel.text = "humidity: \(cellModel.main.humidity)%"

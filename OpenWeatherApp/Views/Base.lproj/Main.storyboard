@@ -21,7 +21,7 @@
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                             </mapView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="redPin" translatesAutoresizingMaskIntoConstraints="NO" id="wbC-vR-Mod">
-                                <rect key="frame" x="179.5" y="310.5" width="16" height="46"/>
+                                <rect key="frame" x="179.5" y="300.5" width="16" height="46"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k1F-4Y-3Eh" userLabel="ContainerView">
                                 <rect key="frame" x="60" y="587" width="255" height="60"/>
@@ -98,7 +98,7 @@
                             <constraint firstItem="NXd-aU-zmC" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" constant="-20" id="gFa-SS-Z9Q"/>
                             <constraint firstItem="k1F-4Y-3Eh" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="60" id="uSt-LY-fbI"/>
                             <constraint firstItem="9Vx-za-C7X" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="wMH-hB-HS1"/>
-                            <constraint firstItem="wbC-vR-Mod" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="yHD-xQ-htS"/>
+                            <constraint firstItem="wbC-vR-Mod" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-10" id="yHD-xQ-htS"/>
                             <constraint firstItem="NXd-aU-zmC" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="zeV-ty-2Pm"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
