@@ -1,4 +1,4 @@
-# App consists of 3 controllers: WeatherViewController, ForecastViewController and SearchViewController.
+## App consists of 3 controllers: WeatherViewController, ForecastViewController and SearchViewController.
 
 ### For the WeatherViewController I used:
 - Alamofire framework - for request and Download progress;
@@ -30,3 +30,4 @@
 - params = [cityName, appID]
 
 ## ALSO the app checks the internetConnection and will show DefaultAlert if needed.
+### The App supports both orientations (Lanscape / Portait) 
