@@ -31,3 +31,5 @@
 
 ## ALSO the app checks the internetConnection and will show DefaultAlert if needed.
 ### The App supports both orientations (Lanscape / Portait) 
+
+### 02.08.19 - Imageloading and caching is added!
