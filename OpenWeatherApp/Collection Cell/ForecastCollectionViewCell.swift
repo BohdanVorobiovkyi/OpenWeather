@@ -30,7 +30,7 @@ extension ForecastCollectionViewCell {
 
 class ForecastCollectionViewCell: UICollectionViewCell {
    
-    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var imageView: IconView!
     @IBOutlet weak var tempLabel: UILabel!
     @IBOutlet weak var humidityLabel: UILabel!
     @IBOutlet weak var windLabel: UILabel!
@@ -79,9 +79,20 @@ class ForecastCollectionViewCell: UICollectionViewCell {
         dateLabel.text = convertDateFormater(cellModel.dateText)
         humidityLabel.text = "humidity: \(cellModel.main.humidity)%"
         windLabel.text = "speed: \(cellModel.wind.speed)m/s"
-        setImage(with: cellModel.weather[0].icon)
+        
+         let iconId = cellModel.weather[0].icon
+        let urlString = "\(NetworkEndpoints.iconsBaseURL)\(iconId)@2x.png"
+        
+        //:MARK - Image loader from the string, with Caching. Here we use custom IconView class, extension class for UIImageVIew
+        print(urlString)
+        imageView.loadImageUsingUrlString(urlString: urlString)
+        
+        //:MARK - For using local icons, try method below
+        //        setImage(with: cellModel.weather[0].icon)
+    
     }
     
+   
     fileprivate func setImage(with imageCode: String){
         imageView.image = UIImage(named: imageCode)
     }

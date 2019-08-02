@@ -53,6 +53,7 @@ class WeatherViewController: UIViewController, InternetConnection {
     }
     
     
+    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         //        containerView.fadeOut()

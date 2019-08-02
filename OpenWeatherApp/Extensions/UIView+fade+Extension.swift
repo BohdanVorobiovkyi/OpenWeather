@@ -9,6 +9,11 @@
 import UIKit
 
 extension UIView {
+    func iconFadeIn(_ duration: TimeInterval = 0.5 ,alpha : CGFloat = 0.85, delay: TimeInterval = 0.0, completion: @escaping ((Bool) -> Void) = {(finished: Bool) -> Void in}) {
+        UIView.animate(withDuration: duration, delay: delay, options: UIView.AnimationOptions.curveEaseIn, animations: {
+            
+            self.alpha = 1
+        }, completion: completion)  }
     func fadeIn(_ duration: TimeInterval = 1.0,alpha : CGFloat = 0.85, delay: TimeInterval = 0.0, completion: @escaping ((Bool) -> Void) = {(finished: Bool) -> Void in}) {
         UIView.animate(withDuration: duration, delay: delay, options: UIView.AnimationOptions.curveEaseIn, animations: {
             

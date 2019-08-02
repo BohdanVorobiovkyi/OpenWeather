@@ -90,7 +90,7 @@
                             </label>
                         </subviews>
                     </stackView>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.90000000000000002" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="g5A-pX-7m8">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.90000000000000002" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="g5A-pX-7m8" customClass="IconView" customModule="OpenWeatherApp" customModuleProvider="target">
                         <rect key="frame" x="20" y="22" width="105" height="105"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="g5A-pX-7m8" secondAttribute="height" multiplier="1:1" id="EWN-1M-Pl7"/>
@@ -122,7 +122,7 @@
             <connections>
                 <outlet property="dateLabel" destination="fly-zv-A0K" id="SRb-N5-zRu"/>
                 <outlet property="humidityLabel" destination="NqS-cC-y7x" id="Rkt-iU-iXa"/>
-                <outlet property="imageView" destination="g5A-pX-7m8" id="ctx-Jp-fgV"/>
+                <outlet property="imageView" destination="g5A-pX-7m8" id="kFm-xx-bmF"/>
                 <outlet property="tempMaxLabel" destination="Veb-CL-g07" id="SQY-G2-aih"/>
                 <outlet property="tempMinLabel" destination="Hh4-GM-pMS" id="gGf-Mu-5ce"/>
                 <outlet property="timeLabel" destination="SL9-SJ-jcw" id="KZ3-nb-MDI"/>

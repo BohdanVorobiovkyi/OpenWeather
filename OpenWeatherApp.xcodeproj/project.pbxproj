@@ -11,6 +11,7 @@
 		1197DF3922F1945D005EE536 /* InternetConnection+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1197DF3822F1945D005EE536 /* InternetConnection+Extension.swift */; };
 		1197DF3B22F19F1A005EE536 /* CollectionCell+Identifire+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1197DF3A22F19F1A005EE536 /* CollectionCell+Identifire+Extension.swift */; };
 		1197DF3E22F1AA06005EE536 /* NetworkEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1197DF3D22F1AA06005EE536 /* NetworkEndpoints.swift */; };
+		11ACE6B722F45E0400397C71 /* IconImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11ACE6B622F45E0400397C71 /* IconImageView.swift */; };
 		11AE48AB22F07E5B00D32732 /* ForecastCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11AE48A922F07E5B00D32732 /* ForecastCollectionViewCell.swift */; };
 		11AE48AC22F07E5B00D32732 /* ForecastCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 11AE48AA22F07E5B00D32732 /* ForecastCollectionViewCell.xib */; };
 		11EF846122EFB01800BFADA2 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EF846022EFB01800BFADA2 /* SearchViewController.swift */; };
@@ -32,6 +33,7 @@
 		1197DF3822F1945D005EE536 /* InternetConnection+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InternetConnection+Extension.swift"; sourceTree = "<group>"; };
 		1197DF3A22F19F1A005EE536 /* CollectionCell+Identifire+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CollectionCell+Identifire+Extension.swift"; sourceTree = "<group>"; };
 		1197DF3D22F1AA06005EE536 /* NetworkEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkEndpoints.swift; sourceTree = "<group>"; };
+		11ACE6B622F45E0400397C71 /* IconImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconImageView.swift; sourceTree = "<group>"; };
 		11AE48A922F07E5B00D32732 /* ForecastCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastCollectionViewCell.swift; sourceTree = "<group>"; };
 		11AE48AA22F07E5B00D32732 /* ForecastCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ForecastCollectionViewCell.xib; sourceTree = "<group>"; };
 		11EF846022EFB01800BFADA2 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -81,6 +83,7 @@
 		1197DF3F22F1BA2F005EE536 /* NetworkEndpoints */ = {
 			isa = PBXGroup;
 			children = (
+				11ACE6B622F45E0400397C71 /* IconImageView.swift */,
 				1197DF3D22F1AA06005EE536 /* NetworkEndpoints.swift */,
 			);
 			path = NetworkEndpoints;
@@ -296,6 +299,7 @@
 				11FC11E422E9B8610071A4F4 /* WeatherViewController.swift in Sources */,
 				11EF846322EFB23600BFADA2 /* UIView+fade+Extension.swift in Sources */,
 				11FC11E222E9B8610071A4F4 /* AppDelegate.swift in Sources */,
+				11ACE6B722F45E0400397C71 /* IconImageView.swift in Sources */,
 				11018B8022EAE71100947A8D /* WeatherDataModel.swift in Sources */,
 				11EF846D22EFD32C00BFADA2 /* ForecastModel(Swifty).swift in Sources */,
 				11EF846B22EFCC3200BFADA2 /* ForecastViewController.swift in Sources */,
